@@ -14,11 +14,9 @@ export class App extends Component {
     images: [],
     totalHits: 0,
     page: 1,
-    // isLastPage: false,
     query: '',
     error: false,
     isLoading: false,
-    // status: idle,
   };
 
   componentDidUpdate(_, prevState) {
@@ -41,7 +39,7 @@ export class App extends Component {
           );
           const images = searchedCollection.hits;
           const totalHits = searchedCollection.totalHits;
-console.log(images);
+          console.log(images);
           if (!totalHits) {
             alert('Nothing found. Please enter another query');
             return;
@@ -67,13 +65,11 @@ console.log(images);
   }
 
   handleFormSearchSubmit = query => {
-    // const queryNormalized = query.trim();
-
     this.setState({
       images: [],
       totalHits: null,
       page: 1,
-      // isLastPage: false,
+
       query: query,
     });
   };
@@ -81,10 +77,6 @@ console.log(images);
   handleLoadMore = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
-
-  // handleLoadMore = () => {
-  //   this.setState({ page: prevState.page + 1 });
-  // };
 
   render() {
     const { page, images, isLoading } = this.state;

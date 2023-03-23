@@ -3,7 +3,6 @@ import axios from 'axios';
 const API_KEY_PIXABAY = '15090936-31f0088bbfe3b64ca1007e23b';
 axios.defaults.baseURL = 'https://pixabay.com/api/';
 export const PER_PAGE = 12;
-// const BASE_URL = 'https://pixabay.com/api/';
 
 export const getImages = async (query, page) => {
   const options = new URLSearchParams ({
@@ -16,8 +15,6 @@ export const getImages = async (query, page) => {
     page: page,
   })
 
-  // const { data } = await axios(`?${searchParams}`); 
-  // const { data } = await axios.get(`${BASE_URL}`, searchParams);
   const { data } = await axios(`?${options}`);
   return data;
 };

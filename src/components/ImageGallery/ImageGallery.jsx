@@ -4,17 +4,33 @@ import PropTypes from 'prop-types';
 
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 
+// export const ImageGallery = ({ imagesFound }) => {
+//   return (
+//     <ul className={css.ImageGallery}>
+//       {imagesFound.map(({ id, pageURL, tags, previewURL }) => (
+//         <ImageGalleryItem
+//           key={id}
+//           webFormatURL={previewURL}
+//           alt={tags}
+//           imageURLForModal={pageURL}
+//         />
+//       ))}
+//     </ul>
+//   );
+// };
+
 export const ImageGallery = ({ imagesFound }) => {
   return (
     <ul className={css.ImageGallery}>
-      {imagesFound.map(({ id, pageURL, tags, previewURL }) => (
-        <ImageGalleryItem
-          key={id}
-          webFormatURL={previewURL}
-          alt={tags}
-          imageURLForModal={pageURL}
-        />
-      ))}
+      {imagesFound.map(image => {
+        return (
+          <li className={css.ImageGalleryItem} key={image.id}>
+          <ImageGalleryItem
+           image={image}
+          />
+          </li>
+        );
+      })}
     </ul>
   );
 };

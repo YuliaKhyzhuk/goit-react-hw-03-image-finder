@@ -10,9 +10,7 @@ export class ImageGalleryItem extends Component {
   };
 
   static propTypes = {
-    webFormatURL: PropTypes.string.isRequired,
-    alt: PropTypes.string.isRequired,
-    imageURLForModal: PropTypes.string.isRequired,
+    image: PropTypes.object.isRequired,
   };
 
   openModal = () => {
@@ -25,22 +23,25 @@ export class ImageGalleryItem extends Component {
 
   render() {
     const { isModalOpen } = this.state;
-    const { webFormatURL, alt, imageURLForModal } = this.props;
+    // const { webFormatURL, alt, imageURLForModal } = this.props.image;
+    const { webformatURL, tags, largeImageURL  } = this.props.image;
+
 
     return (
-      <li className={css.ImageGalleryItem}>
+      <div>
         <img
           className={css.ImageGalleryItem__image}
-          src={webFormatURL}
-          alt={alt}
+          src={webformatURL}
+          alt={tags}
           onClick={this.openModal}
         />
         {isModalOpen && (
           <Modal onClose={this.closeModal}>
-            <img src={imageURLForModal} tags={alt} />
+            <img src={largeImageURL} tags={tags} />
           </Modal>
+         
         )}
-      </li>
+      </div>
     );
   }
 }

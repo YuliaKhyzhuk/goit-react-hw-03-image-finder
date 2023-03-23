@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import css from 'components/styles.module.css';
 import PropTypes from 'prop-types';
 
-import { createPortal } from 'react-dom';
+// import { createPortal } from 'react-dom';
 
-const modalRoot = document.querySelector('#modal-root');
+// const modalRoot = document.querySelector('#modal-root');
 
 export class Modal extends Component {
   static propTypes = {
@@ -16,7 +16,7 @@ export class Modal extends Component {
   };
 
   componentWillUnmount() {
-    window.addEventListener('keydown', this.handleModalClose);
+    window.removeEventListener('keydown', this.handleModalClose);
   };
 
   handleModalClose = ({code, target, currentTarget}) => {
@@ -28,13 +28,13 @@ export class Modal extends Component {
 
   render() {
     const { children } = this.props;
-    return createPortal(
+    return (
       <div className={css.Overlay} onClick={this.handleModalClose}>
         <div className={css.Modal}>
           { children }
         </div>
-      </div>, modalRoot,
-    );
+      </div>
+    )
   }
 }
 

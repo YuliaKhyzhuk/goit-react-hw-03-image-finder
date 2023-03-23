@@ -21,8 +21,9 @@ export class Modal extends Component {
 
   handleModalClose = ({code, target, currentTarget}) => {
     if(code === 'Escape' || target === currentTarget) {
+        // Закриття по кнопці Esc чи кліку на бекдроп
         this.props.onClose();
-    };
+    }
   };
 
   render() {

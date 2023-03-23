@@ -44,8 +44,8 @@ export class Searchbar extends Component {
           <input
             className={css.SearchForm__input}
             type="text"
-            autocomplete="off"
-            autofocus
+            // autocomplete="off"
+            // autofocus
             placeholder="Search images and photos"
             value={this.state.query}
             onChange={this.handleQueryChange}

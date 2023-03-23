@@ -7,12 +7,12 @@ import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 export const ImageGallery = ({ imagesFound }) => {
   return (
     <ul className={css.ImageGallery}>
-      {imagesFound.map(({ id, webFormatURL, largeImageURL, tags }) => (
+      {imagesFound.map(({ id, pageURL, tags, previewURL }) => (
         <ImageGalleryItem
           key={id}
-          webFormatURL={webFormatURL}
+          webFormatURL={previewURL}
           alt={tags}
-          imageURLForModal={largeImageURL}
+          imageURLForModal={pageURL}
         />
       ))}
     </ul>
@@ -23,8 +23,8 @@ ImageGallery.propTypes = {
   imagesFound: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      webFormatURL: PropTypes.string.isRequired,
-      largeImageURL: PropTypes.string.isRequired,
+      pageURL: PropTypes.string.isRequired,
+      previewURL: PropTypes.string.isRequired,
       tags: PropTypes.string.isRequired,
     })
   ).isRequired,

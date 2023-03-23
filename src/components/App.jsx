@@ -1,39 +1,79 @@
 import React, { Component } from 'react';
 import css from './styles.module.css';
-import * as API from 'services/pixabayApi';
+import { PER_PAGE, getImages } from 'services/pixabayApi';
 
 import { Button } from './Button/Button';
 import { ImageGallery } from './ImageGallery/ImageGallery';
-import { ImageGalleryItem } from './ImageGalleryItem/ImageGalleryItem';
+// import { ImageGalleryItem } from './ImageGalleryItem/ImageGalleryItem';
 import { Loader } from './Loader/Loader';
 // import { Modal } from './Modal/Modal';
 import { Searchbar } from './Searchbar/Searchbar';
 
-
 export class App extends Component {
   state = {
     images: [],
-    totalImages: 0,
+    totalHits: 0,
     page: 1,
-    isLastPage: false,
+    // isLastPage: false,
     query: '',
-    error: null,
+    error: false,
+    isLoading: false,
     // status: idle,
   };
 
+  componentDidUpdate(_, prevState) {
+    if (this.state.query === '') {
+      alert('Please select a query!');
+      return;
+    }
 
+    if (
+      prevState.query !== this.state.query ||
+      prevState.page !== this.state.page
+    ) {
+      const getImgCollection = async () => {
+        try {
+          this.setState({ isLoading: true });
 
+          const searchedCollection = await getImages(
+            this.state.query,
+            this.state.page
+          );
+          const images = searchedCollection.hits;
+          const totalHits = searchedCollection.totalHits;
+console.log(images);
+          if (!totalHits) {
+            alert('Nothing found. Please enter another query');
+            return;
+          }
 
+          this.setState(prevState => ({
+            images: [...prevState.images, ...images],
+            totalHits,
+          }));
+        } catch (error) {
+          this.setState({ error: true });
+          alert('Oops! Error loading!');
+        } finally {
+          this.setState({ isLoading: false });
+        }
+      };
+      getImgCollection();
+    }
+  }
 
+  isMorePagesAvailable(page) {
+    return page * PER_PAGE < this.state.totalHits;
+  }
 
   handleFormSearchSubmit = query => {
     // const queryNormalized = query.trim();
 
     this.setState({
       images: [],
-      totalImages: null,
+      totalHits: null,
       page: 1,
-      isLastPage: false,
+      // isLastPage: false,
       query: query,
     });
   };
@@ -47,12 +87,19 @@ export class App extends Component {
   // };
 
   render() {
+    const { page, images, isLoading } = this.state;
+
     return (
       <div className={css.App}>
         <Searchbar onSearch={this.handleFormSearchSubmit} />
-        {/* <ImageGallery /> */}
-        <Loader />
-        <Button handleLoadMore={this.handleLoadMore}></Button>       
+
+        {isLoading && <Loader />}
+
+        {images.length !== 0 && <ImageGallery imagesFound={images} />}
+
+        {this.isMorePagesAvailable(page) && isLoading === false && (
+          <Button handleLoadMore={this.handleLoadMore} />
+        )}
       </div>
     );
   }

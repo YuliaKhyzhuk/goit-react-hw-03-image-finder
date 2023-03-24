@@ -82,12 +82,15 @@ export class App extends Component {
     const { page, images, isLoading } = this.state;
 
     return (
-      <div className={css.App}>
+      <div>
+        <div className={css.App}>
         <Searchbar onSearch={this.handleFormSearchSubmit} />
 
         {isLoading && <Loader />}
 
         {images.length !== 0 && <ImageGallery imagesFound={images} />}
+
+        </div>
 
         {this.isMorePagesAvailable(page) && isLoading === false && (
           <Button handleLoadMore={this.handleLoadMore} />

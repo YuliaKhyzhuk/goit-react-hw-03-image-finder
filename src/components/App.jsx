@@ -20,11 +20,6 @@ export class App extends Component {
   };
 
   componentDidUpdate(_, prevState) {
-    if (this.state.query === '') {
-      alert('Please select a query!');
-      return;
-    }
-
     if (
       prevState.query !== this.state.query ||
       prevState.page !== this.state.page

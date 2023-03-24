@@ -8,16 +8,23 @@ export class Modal extends Component {
   };
 
   componentDidMount() {
-    window.addEventListener('keydown', this.handleModalClose);
+    window.addEventListener('keydown', this.handleKeyDown);
   };
 
   componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleModalClose);
+    window.removeEventListener('keydown', this.handleKeyDown);
   };
 
-  handleModalClose = ({code, target, currentTarget}) => {
-    if(code === 'Escape' || target === currentTarget) {
-        // Закриття по кнопці Esc чи кліку на бекдроп
+  handleKeyDown = ({code}) => {
+    if(code === 'Escape') {
+        // Закриття по кнопці Esc 
+        this.props.onClose();
+    }
+  };
+
+  handleBackdropClick = ({target, currentTarget}) => {
+    if(target === currentTarget) {
+        // Закриття по кліку на бекдроп
         this.props.onClose();
     }
   };
@@ -25,7 +32,7 @@ export class Modal extends Component {
   render() {
     const { children } = this.props;
     return (
-      <div className={css.Overlay} onClick={this.handleModalClose}>
+      <div className={css.Overlay} onClick={this.handleBackdropClick}>
         <div className={css.Modal}>
           { children }
         </div>
